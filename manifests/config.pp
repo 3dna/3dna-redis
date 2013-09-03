@@ -7,6 +7,8 @@
 # The parameters are mostly what is available in the default config file for redis 2.4 on ubuntu (the quantal package)
 # Any missing parameters, sorry, I'll take a pull request! :)
 #
+# The only one really of note is 'loglevel'. The class's param is called redis_loglevel because loglevel is a metaparam in puppet
+#
 # The defaults are all also pulled from that file, so if there's one that's different for your OS package, let me know and we can
 # extract it out to the params class, but you're of course more than welcome to provide your own and/or submit a PR :)
 #
@@ -36,7 +38,7 @@ class redis::config (
   $unixsocket                  = undef,
   $unixsocketperm              = 0755,
   $timeout                     = 0,
-  $loglevel                    = 'notice',
+  $redis_loglevel              = 'notice',
   $logfile                     = $redis::params::logfile,
   $pidfile                     = $redis::params::pidfile,
   $syslog_enabled              = false,
@@ -63,7 +65,7 @@ class redis::config (
   $appendfsync                 = 'everysec',
   $no_append_fsync_on_rewrite  = false,
   $auto_aof_rewrite_percentage = 100,
-  $auto_aof_rewrite_min_size   = '64mb'
+  $auto_aof_rewrite_min_size   = '64mb',
   $slowlog_log_slower_than     = 10000,
   $slowlog_max_len             = 128,
   # vm is deprecated in 1.4
