@@ -20,7 +20,7 @@ Copyright ©2013 3dna Corp
 Contact
 -------
 
-[Jeremy Kitchen <jeremy@nationbuilder.com>](mailto:jeremy@nationbuilder.com)
+Jeremy Kitchen \<[jeremy@nationbuilder.com](mailto:jeremy@nationbuilder.com)\>
 
 
 Support
