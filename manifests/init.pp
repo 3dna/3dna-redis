@@ -27,7 +27,6 @@ class redis inherits redis::params {
   require ::redis::config
   require ::redis::service
 
-  Class["::redis::config"] -> Class["::redis::install"] -> Class["::redis::service"]
-  Class["::redis::config"] ~> Class["::redis::service"]
+  Class["::redis::install"] -> Class[:redis::config] ~> Class["::redis::service"]
 
 }
