@@ -86,24 +86,27 @@ class redis::config (
   $activerehashing             = true,
   $include                     = [],
 ) {
+  $syslog_enabled_bool = str2bool($syslog_enabled)
+  $rdbcompression_bool = str2bool($rdbcompression)
+  $slave_serve_stale_data_bool = str2bool($slave_serve_stale_data)
+  $appendonly_bool = str2bool($appendonly)
+  $no_append_fsync_on_rewrite_bool = str2bool($no_append_fsync_on_rewrite)
+  $vm_enabled_bool = str2bool($vm_enabled)
+  $activerehashing_bool = str2bool($activerehashing)
+  
+  
   # validate port as numeric
   # validate timeout as numeric?
   # validate absolute path for logfile
   # validate absolute path for pidfile
-  # validate syslog_enabled as bool or yes/no?
   # validate databases as numeric?
   # validate absolute path for dir
-  # validate rdbcompression as bool or yes/no?
-  # validate slave_serve_stale_data as bool or yes/no?
   # validate repl_ping_slave_period as numeric
   # validate repl_timeout as numeric
   # validate repl_timeout > repl_ping_slave_period
   # validate rename_command as hash
   # validate maxclients as numeric
   # validate maxmemory_samples as numeric
-  # validate appendonly as bool or yes/no?
-  # validate no_append_fsync_on_rewrite as bool or yes/no?
-  # validate vm_enabled as bool or yes/no?
   # validate absolute path for vm_swap_file
   # validate vm_max_memory as numeric
   # validate vm_page_size as numeric
@@ -116,7 +119,6 @@ class redis::config (
   # validate set_max_intset_entries as numeric
   # validate zset_max_ziplist_entries as numeric
   # validate zset_max_ziplist_value as numeric
-  # validate activerehashing as bool or yes/no?
 
 
   file { $redis::params::config_file:
