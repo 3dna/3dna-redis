@@ -29,11 +29,11 @@ class redis inherits redis::params {
 
   Class["::redis::install"] -> Class["::redis::config"] ~> Class["::redis::service"]
 
-  anchor { 'redis::begin':
-    before => [Class['::redis::install'],Class['::redis::config']],
-    notify => Class['::redis::service'],
-  }
-  anchor { 'redis::end':
-    require => Class['::redis::service'],
+  anchor {
+    'redis::begin':
+      before => [Class['::redis::install'],Class['::redis::config']],
+      notify => Class['::redis::service'];
+    'redis::end':
+      require => Class['::redis::service'];
   }
 }
