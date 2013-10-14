@@ -23,10 +23,17 @@
 # Copyright 2013 3dna
 #
 class redis inherits redis::params {
-  require ::redis::install
-  require ::redis::config
-  require ::redis::service
+  include ::redis::install
+  include ::redis::config
+  include ::redis::service
 
   Class["::redis::install"] -> Class["::redis::config"] ~> Class["::redis::service"]
 
+  anchor { 'redis::begin':
+    before => [Class['::redis::install'],Class['::redis::config']],
+    notify => Class['::redis::service'],
+  }
+  anchor { 'redis::end':
+    require => Class['::redis::service'],
+  }
 }
