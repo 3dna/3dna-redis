@@ -85,6 +85,7 @@ class redis::config (
   $zset_max_ziplist_value      = 64,
   $activerehashing             = true,
   $include                     = [],
+  $ulimit_open_files           = undef,
 ) {
   $syslog_enabled_bool = str2bool($syslog_enabled)
   $rdbcompression_bool = str2bool($rdbcompression)
@@ -123,5 +124,9 @@ class redis::config (
 
   file { $redis::params::config_file:
     content => template('redis/redis.conf.erb'),
+  }
+
+  file { $redis::params::default_file:
+    content => template('redis/redis.default.erb'),
   }
 }
