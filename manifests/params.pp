@@ -21,7 +21,7 @@ class redis::params {
     $vm_swap_file = '/var/lib/redis/redis.swap'
     $package      = 'redis-server'
     $service      = 'redis-server'
-    $defaults_file = '/etc/default/redis-server'
+    $default_file = '/etc/default/redis-server'
   } else {
     fail("osfamily ${osfamily} not currently supported please make a pull request!")
   }
