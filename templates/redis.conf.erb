@@ -87,9 +87,9 @@ databases <%= @databases %>
 #
 #   Note: you can disable saving at all commenting all the "save" lines.
 <%- if @save -%>
-  <% Array(@save).each do | save | -%>
+  <%- Array(@save).each do | save | -%>
 save <%= save %>
-  <% end -%>
+  <%- end -%>
 <%- end -%>
 
 # Compress string objects using LZF when dump .rdb databases?
@@ -191,9 +191,9 @@ requirepass <%= @requirepass %>
 # an empty string:
 #
 <%- if @rename_command -%>
-  <% @rename_command.sort.each do |command, rename| -%>
+  <%- @rename_command.sort.each do |command, rename| -%>
 rename-command <%= command %> <%= rename ? rename : '""' %>
-  <% end -%>
+  <%- end -%>
 <%- end -%>
 
 ################################### LIMITS ####################################
