@@ -86,9 +86,11 @@ databases <%= @databases %>
 #   after 60 sec if at least 10000 keys changed
 #
 #   Note: you can disable saving at all commenting all the "save" lines.
-<% Array(@save).each do | save | -%>
+<%- if @save -%>
+  <% Array(@save).each do | save | -%>
 save <%= save %>
-<% end -%>
+  <% end -%>
+<%- end -%>
 
 # Compress string objects using LZF when dump .rdb databases?
 # For default that's set to 'yes' as it's almost always a win.
