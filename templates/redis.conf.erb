@@ -190,9 +190,11 @@ requirepass <%= @requirepass %>
 # It is also possilbe to completely kill a command renaming it into
 # an empty string:
 #
-<% @rename_command.sort.each do |command, rename| -%>
+<%- if @rename_command -%>
+  <% @rename_command.sort.each do |command, rename| -%>
 rename-command <%= command %> <%= rename ? rename : '""' %>
-<% end -%>
+  <% end -%>
+<%- end -%>
 
 ################################### LIMITS ####################################
 
