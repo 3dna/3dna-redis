@@ -281,7 +281,7 @@ repl-timeout <%= @repl_timeout %>
 # By default we optimize for low latency, but in very high traffic conditions
 # or when the master and slaves are many hops away, turning this to "yes" may
 # be a good idea.
-repl-disable-tcp-nodelay <%= @repl_disable_tcp_nodelay_bool ? 'true' : 'false' %>
+repl-disable-tcp-nodelay <%= @repl_disable_tcp_nodelay_bool ? 'yes' : 'no' %>
 
 
 # Set the replication backlog size. The backlog is a buffer that accumulates
