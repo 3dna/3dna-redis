@@ -460,8 +460,8 @@ vm-max-threads <%= @vm_max_threads %>
 # have at max a given numer of elements, and the biggest element does not
 # exceed a given threshold. You can configure this limits with the following
 # configuration directives.
-hash-max-zipmap-entries <%= @hash_max_zipmap_entries %>
-hash-max-zipmap-value <%= @hash_max_zipmap_value %>
+hash-max-zipmap-entries <%= @hash_max_ziplist_entries %>
+hash-max-zipmap-value <%= @hash_max_ziplist_value %>
 
 # Similarly to hashes, small lists are also encoded in a special way in order
 # to save a lot of space. The special representation is only used when
