@@ -205,7 +205,7 @@ dir <%= @dir %>
 # different interval, or to listen to another port, and so on.
 #
 <%- if @slaveof -%>
-slaveof = <%= @slaveof %>
+slaveof <%= @slaveof %>
 <%- else -%>
 # slaveof <masterip> <masterport>
 <%- end -%>
@@ -216,7 +216,7 @@ slaveof = <%= @slaveof %>
 # refuse the slave request.
 #
 <%- if @masterauth -%>
-masterauth = <%= @masterauth %>
+masterauth <%= @masterauth %>
 <%- else -%>
 # masterauth <master-password>
 <%- end -%>
@@ -357,7 +357,7 @@ min-slaves-max-lag <%= @min_slaves_max_lag %>
 # use a very strong password otherwise it will be very easy to break.
 #
 <%- if @requirepass -%>
-requirepass = <%= @requirepass %>
+requirepass <%= @requirepass %>
 <%- else -%>
 # requirepass foobared
 <%- end -%>
@@ -423,7 +423,7 @@ maxclients <%= @maxclients %>
 # output buffers (but this is not needed if the policy is 'noeviction').
 #
 <%- if @maxmemory -%>
-maxmemory = <%= @maxmemory %>
+maxmemory <%= @maxmemory %>
 <%- else -%>
 # maxmemory <bytes>
 <%- end -%>
