@@ -38,6 +38,7 @@ class redis::config (
   $unixsocket                  = undef,
   $unixsocketperm              = 0755,
   $timeout                     = 0,
+  $tcp_keepalive               = 0,
   $redis_loglevel              = 'notice',
   $logfile                     = $redis::params::logfile,
   $pidfile                     = $redis::params::pidfile,
@@ -46,17 +47,30 @@ class redis::config (
   $syslog_facility             = 'local0',
   $databases                   = 16,
   $save                        = [ '900 1', '300 10', '60 10000' ],
+  $stop_writes_on_bgsave_error = true,
   $rdbcompression              = true,
+  $rdbchecksum                 = true,
   $dbfilename                  = 'dump.rdb',
   $dir                         = $redis::params::dir,
   $slaveof                     = undef,
   $masterauth                  = undef,
   $slave_serve_stale_data      = true,
+  $slave_read_only             = true,
   $repl_ping_slave_period      = 10,
   $repl_timeout                = 60,
+  $repl_disable_tcp_nodelay    = false,
+  $repl_backlog_size           = '1mb',
+  $repl_backlog_ttl            = 3600,
+  $slave_priority              = 100,
+  $min_slaves_to_write         = 0,
+  $min_slaves_max_lag          = 10,
   $requirepass                 = false,
   $rename_command              = {},
-  $maxclients                  = 0,
+  $maxclients                  = $redis_version ? {
+    '2.4'   => '0',
+    '2.8'   => '10000',
+    default => '0',
+  },
   $maxmemory                   = undef,
   $maxmemory_policy            = 'volatile-lru',
   $maxmemory_samples           = 3,
@@ -66,6 +80,9 @@ class redis::config (
   $no_append_fsync_on_rewrite  = false,
   $auto_aof_rewrite_percentage = 100,
   $auto_aof_rewrite_min_size   = '64mb',
+  $aof_rewrite_incremental_fsync = true,
+  $lua_time_limit              = 5000,
+  $notify_keyspace_events      = "",
   $slowlog_log_slower_than     = 10000,
   $slowlog_max_len             = 128,
   # vm is deprecated in 1.4
@@ -76,17 +93,23 @@ class redis::config (
   $vm_pages                    = 134217728,
   $vm_max_threads              = 4,
   # advanced settings
-  $hash_max_zipmap_entries     = 512,
-  $hash_max_zipmap_value       = 64,
+  $hash_max_ziplist_entries     = 512,
+  $hash_max_ziplist_value       = 64,
   $list_max_ziplist_entries    = 512,
   $list_max_ziplist_value      = 64,
   $set_max_intset_entries      = 512,
   $zset_max_ziplist_entries    = 128,
   $zset_max_ziplist_value      = 64,
   $activerehashing             = true,
+  $client_output_buffer_limit  = [
+                                  'normal 0 0 0',
+                                  'slave 256mb 64mb 60',
+                                  'pubsub 32mb 8mb 60',
+                                ],
+  $hz                          = 10,
   $include                     = [],
   $ulimit_open_files           = undef,
-) {
+) inherits redis {
   $syslog_enabled_bool = str2bool($syslog_enabled)
   $rdbcompression_bool = str2bool($rdbcompression)
   $slave_serve_stale_data_bool = str2bool($slave_serve_stale_data)
@@ -94,6 +117,15 @@ class redis::config (
   $no_append_fsync_on_rewrite_bool = str2bool($no_append_fsync_on_rewrite)
   $vm_enabled_bool = str2bool($vm_enabled)
   $activerehashing_bool = str2bool($activerehashing)
+  $stop_writes_on_bgsave_error_bool = str2bool($stop_writes_on_bgsave_error)
+  $rdbchecksum_bool = str2bool($rdbchecksum)
+  $slave_read_only_bool = str2bool($slave_read_only)
+  $repl_disable_tcp_nodelay_bool = str2bool($repl_disable_tcp_nodelay)
+  $aof_rewrite_incremental_fsync_bool = str2bool($aof_rewrite_incremental_fsync)
+  
+  
+  
+  
   
   
   # validate port as numeric
@@ -123,7 +155,7 @@ class redis::config (
 
 
   file { $redis::params::config_file:
-    content => template('redis/redis.conf.erb'),
+    content => template("redis/redis-${version}.conf.erb"),
   }
 
   file { $redis::params::default_file:

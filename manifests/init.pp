@@ -22,7 +22,9 @@
 #
 # Copyright 2013 3dna
 #
-class redis inherits redis::params {
+class redis (
+  $version = $redis_version,
+) inherits redis::params {
   include ::redis::install
   include ::redis::config
   include ::redis::service
