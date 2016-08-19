@@ -69,6 +69,7 @@ class redis::config (
   $maxclients                  = $redis_version ? {
     '2.4'   => '0',
     '2.8'   => '10000',
+    '3.0'   => '10000',
     default => '10000',
   },
   $maxmemory                   = undef,
